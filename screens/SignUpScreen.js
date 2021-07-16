@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const SignIn = ({navigation}) => {
+const SignUpScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -26,20 +26,19 @@ const SignIn = ({navigation}) => {
           <TextInput style={styles.loginInput} placeholder="Email"></TextInput>
 
           <Text style={styles.titles}>Password</Text>
-          <TextInput style={styles.passInput} placeholder="Password"></TextInput>
+          <TextInput
+            style={styles.passInput}
+            placeholder="Password"></TextInput>
 
-          <View style="styles.signinContainer">
-            <TouchableOpacity
-              style={styles.signin}
-              onPress={() => navigation.navigate('Home')}>
-              <Text style={styles.signinText}>Sign in</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.titles}>Repeat your password</Text>
+          <TextInput
+            style={styles.passInput}
+            placeholder="Password"></TextInput>
 
           <View style="styles.signupContainer">
             <TouchableOpacity
               style={styles.signup}
-              onPress={() => navigation.navigate('SignUp')}>
+              onPress={() => navigation.navigate('SignIn')}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 18,
   },
-  signin: {
+  signup: {
     borderColor: '#5C2FE8',
     backgroundColor: '#FAFAFC',
     width: '100%',
@@ -105,30 +104,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#5C2FE8',
     marginBottom: 10,
   },
-  signinText: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#FAFAFC',
-  },
-  signup: {
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#5C2FE8',
-    backgroundColor: '#FAFAFC',
-    marginBottom: 10,
-  },
   signupText: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#5C2FE8',
+    color: '#FAFAFC',
   },
   signinContainer: {
     alignItems: 'center',
   },
 });
 
-export default SignIn;
+export default SignUpScreen;
