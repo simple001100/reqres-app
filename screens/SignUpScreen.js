@@ -10,6 +10,13 @@ import {
 } from 'react-native';
 
 const SignUpScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  
+  const signUp = () => {
+    dispatch(registerUsers());
+    useSelector(state => state.clientReducer.users) ? () => navigation.navigate('SignIn'): ;
+  }
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -38,7 +45,7 @@ const SignUpScreen = ({navigation}) => {
           <View style="styles.signupContainer">
             <TouchableOpacity
               style={styles.signup}
-              onPress={() => navigation.navigate('SignIn')}>
+              onPress={signUp()}> 
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>

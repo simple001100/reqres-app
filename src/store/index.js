@@ -3,15 +3,15 @@ import { applyMiddleware, combineReducers } from "redux";
 import usersReducer from "./usersReducer";
 import { createStore } from "redux";
 import { rootWatcher } from "../saga";
-import { userWatcher } from "../saga/usersSaga";
+import clientReducer from "./clientReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-    // clientReducer,
+    clientReducer,
     usersReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(userWatcher);
+sagaMiddleware.run(rootWatcher);

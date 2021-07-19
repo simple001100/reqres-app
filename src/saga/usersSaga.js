@@ -1,14 +1,12 @@
 import { call, put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
 import { FETCH_USERS } from '../store/usersReducer';
 import { setUsers } from '../store/usersReducer';
-
-const fetchUsersFromApi = () => axios.get('https://reqres.in/api/users/');
+import { fetchUsersFromApi } from '../api/requests';
 
 function* fetchUsersWorker() {
-    const data = yield call(fetchUsersFromApi);
-    const json = yield data.json();
-    yield put(setUsers(json.data));
+    const res = yield call(fetchUsersFromApi);
+    const {data} = res;
+    yield put(setUsers(data));
 }
 
 export function* userWatcher() {

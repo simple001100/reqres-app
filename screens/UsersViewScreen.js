@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {View, FlatList, StyleSheet, Text, Button} from 'react-native';
+import {View, FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchUsers} from '../src/store/usersReducer';
 import UserCard from '../components/UserCard';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const UserViewScreen = () => {
   const dispatch = useDispatch();
@@ -14,19 +15,19 @@ const UserViewScreen = () => {
       <View>
         <FlatList
           data={usersCards}
-          renderItem={item => <UserCard data={item} />}
+          renderItem={({item}) => <UserCard data={item} />}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
       </View>
 
-      {/* <View>
-        <TouchableOpacity>
-          <FontAwesome name="plus" size={16} color={colors.white} />
+      {/* <View style={styles.footer}>
+        <TouchableOpacity style={styles.slider}>
+        <Icon name="left" size={21} />
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <FontAwesome name="plus" size={16} color={colors.white} />
+        <TouchableOpacity style={styles.slider}>
+          <Icon name="right" size={21} />
         </TouchableOpacity>
       </View> */}
     </View>
@@ -34,7 +35,18 @@ const UserViewScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  footer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  slider: {
+    paddingHorizontal: 10,
+  },
 });
 
 export default UserViewScreen;

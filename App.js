@@ -13,13 +13,18 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="DrawerContent" component={DrawerContentScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} options={options}/>
+          <Stack.Screen name="DrawerContent" component={DrawerContentScreen} options={options}/>
+          <Stack.Screen name="SignUp" component={SignUpScreen} options={options}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 };
+
+const options = {
+  headerTitleAlign: 'center',
+  headerShown: false
+}
 
 export default App;
