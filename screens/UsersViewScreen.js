@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchUsers} from '../src/store/usersReducer';
 import UserCard from '../components/UserCard';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const UserViewScreen = () => {
   const dispatch = useDispatch();

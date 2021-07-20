@@ -8,12 +8,12 @@ export const REGISTER_USER = "REGISTR_USER";
 
 export default function clientReducer(state = initialState, action) {
     switch (action. type) {
-        case REGISTER_USER:
-            return {...state, state: payload.state};
+        case SET_USER:
+            return {...state, state: action.payload.state};
     };
     return state;
 }
 
-export const setUser = payload => ({type: SET_USER, payload});
-export const registerhUser = () => ({type: REGISTER_USER, payload});
+export const setUser = (payload) => ({type: SET_USER, payload});
+export const registerUser = (payload) => ({type: REGISTER_USER, payload});
 

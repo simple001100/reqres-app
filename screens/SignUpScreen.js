@@ -8,15 +8,29 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
+import {registerUser} from '../src/store/clientReducer';
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
-  
+
   const signUp = () => {
-    dispatch(registerUsers());
-    useSelector(state => state.clientReducer.users) ? () => navigation.navigate('SignIn'): ;
-  }
-  
+    dispatch(registerUser({email, password}));
+    useSelector(state => state.clientReducer.state)
+      ? () => navigation.navigate('SignIn')
+      : () => {
+          showMessage({
+            message: 'Simple message',
+            type: 'info',
+          });
+        };
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -35,17 +49,17 @@ const SignUpScreen = ({navigation}) => {
           <Text style={styles.titles}>Password</Text>
           <TextInput
             style={styles.passInput}
-            placeholder="Password"></TextInput>
+            placeholder="Password"
+            onChange={text => setEmail(text)}></TextInput>
 
           <Text style={styles.titles}>Repeat your password</Text>
           <TextInput
             style={styles.passInput}
-            placeholder="Password"></TextInput>
+            placeholder="Password"
+            onChange={text => setPassword(text)}></TextInput>
 
           <View style="styles.signupContainer">
-            <TouchableOpacity
-              style={styles.signup}
-              onPress={signUp()}> 
+            <TouchableOpacity style={styles.signup} onPress={signUp()}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>
