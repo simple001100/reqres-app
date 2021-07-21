@@ -7,6 +7,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import {Provider} from 'react-redux';
 import ProfileScreen from './screens/ProfileScreen';
 import UserViewScreen from './screens/UsersViewScreen';
+import { TabButtons } from './components/TabButtons';
 import { store } from './src/store';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Stack.Screen name="SignUp" component={SignUpScreen} options={options}/>
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={options}/>
           <Stack.Screen name="UsersViewScreen" component={UserViewScreen} options={options}/>
+          <Stack.Screen name="TabButtons" component={TabButtons} options={options}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

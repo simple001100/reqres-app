@@ -1,14 +1,20 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 
-export const TabButton = (currentTab, setCurrentTab, title, image) => {
+export const TabButtons = (currentTab, setCurrentTab, title, image, setShowProfile, navigation) => {
     return (
       <TouchableOpacity onPress={() => {
-        if (title == "LogOut") {
+        if (title === "LogOut") {
+          navigation.navigate('SignIn')
+        } else if (title === "Users"){
+          setCurrentTab(title);
+          setShowProfile(false);
         } else {
-          setCurrentTab(title)
+          setCurrentTab(title);
+          setShowProfile(true);
         }
       }}>
+
         <View style={{
           flexDirection: "row",
           alignItems: 'center',

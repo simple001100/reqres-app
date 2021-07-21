@@ -8,7 +8,6 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import DrawerContentScreen from './DrawerContentScreen';
 
 const SignInScreen = ({navigation}) => {
   return (
