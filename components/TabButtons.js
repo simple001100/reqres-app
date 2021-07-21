@@ -1,12 +1,20 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 
-export const TabButtons = (currentTab, setCurrentTab, title, image, setShowProfile, navigation) => {
-    return (
-      <TouchableOpacity onPress={() => {
-        if (title === "LogOut") {
-          navigation.navigate('SignIn')
-        } else if (title === "Users"){
+export const TabButtons = (
+  currentTab,
+  setCurrentTab,
+  title,
+  image,
+  setShowProfile,
+  navigation,
+) => {
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        if (title === 'LogOut') {
+          navigation.navigate('SignIn');
+        } else if (title === 'Users') {
           setCurrentTab(title);
           setShowProfile(false);
         } else {
@@ -14,31 +22,51 @@ export const TabButtons = (currentTab, setCurrentTab, title, image, setShowProfi
           setShowProfile(true);
         }
       }}>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: currentTab == title ? 'white' : 'transparent'},
+        ]}>
+        <Image
+          source={image}
+          style={[
+            styles.buttonIcon,
+            {tintColor: currentTab == title ? '#5359D1' : 'white'},
+          ]}
+        />
 
-        <View style={{
-          flexDirection: "row",
-          alignItems: 'center',
-          paddingVertical: 8,
-          backgroundColor: currentTab == title ? 'white' : 'transparent',
-          paddingLeft: 13,
-          paddingRight: 35,
-          borderRadius: 8,
-          marginTop: 15
-        }}>
-  
-          <Image source={image} style={{
-            width: 25, height: 25,
-            tintColor: currentTab == title ? "#5359D1" : "white"
-          }}></Image>
-  
-          <Text style={{
-            fontSize: 15,
-            fontWeight: 'bold',
-            paddingLeft: 15,
-            color: currentTab == title ? "#5359D1" : "white"
-          }}>{title}</Text>
-  
-        </View>
-      </TouchableOpacity>
-    );
-  }
+        <Text
+          style={[
+            styles.buttonName,
+            {
+              color: currentTab == title ? '#5359D1' : 'white',
+            },
+          ]}>
+          {title}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+
+    paddingLeft: 13,
+    paddingRight: 35,
+    borderRadius: 8,
+    marginTop: 15,
+  },
+  buttonIcon: {
+    width: 25,
+    height: 25,
+  },
+  buttonName: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingLeft: 15,
+  },
+});

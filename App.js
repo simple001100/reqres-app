@@ -19,9 +19,6 @@ const App = () => {
           <Stack.Screen name="SignIn" component={SignInScreen} options={options}/>
           <Stack.Screen name="DrawerContent" component={DrawerContentScreen} options={options}/>
           <Stack.Screen name="SignUp" component={SignUpScreen} options={options}/>
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={options}/>
-          <Stack.Screen name="UsersViewScreen" component={UserViewScreen} options={options}/>
-          <Stack.Screen name="TabButtons" component={TabButtons} options={options}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

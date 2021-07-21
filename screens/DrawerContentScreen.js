@@ -8,11 +8,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+
 import ProfileScreen from './ProfileScreen';
 import UsersViewScreen from './UsersViewScreen';
 import {TabButtons} from '../components/TabButtons';
-import profile from '../assets/home.png';
+import profile from '../assets/unknownUser.jpg';
 
 import home from '../assets/home.png';
 import search from '../assets/search.png';
@@ -22,7 +22,7 @@ import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 
 const DrawerContentScreen = ({navigation}) => {
-  const [currentTab, setCurrentTab] = useState('Home');
+  const [currentTab, setCurrentTab] = useState('Profile');
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -33,7 +33,7 @@ const DrawerContentScreen = ({navigation}) => {
   const viewPage = state => {
     switch (state) {
       case true:
-        return <ProfileScreen />;
+        return <ProfileScreen avatar={profile} />;
       case false:
         return <UsersViewScreen />;
     }
@@ -41,27 +41,12 @@ const DrawerContentScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{justifyContent: 'flex-start', padding: 15}}>
-        <Image
-          source={profile}
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: 10,
-            marginTop: 8,
-          }}></Image>
+      <View style={styles.sidebarContainer}>
+        <Image source={profile} style={styles.profileImage}></Image>
 
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: 'white',
-            marginTop: 20,
-          }}>
-          User
-        </Text>
+        <Text style={styles.profileName}>User</Text>
 
-        <View style={{flexGrow: 1, marginTop: 50}}>
+        <View style={styles.buttonsContainer}>
           {TabButtons(
             currentTab,
             setCurrentTab,
@@ -79,22 +64,25 @@ const DrawerContentScreen = ({navigation}) => {
         </View>
 
         <View>
-          {TabButtons(currentTab, setCurrentTab, 'LogOut', logout, setShowProfile, navigation)}
+          {TabButtons(
+            currentTab,
+            setCurrentTab,
+            'LogOut',
+            logout,
+            setShowProfile,
+            navigation,
+          )}
         </View>
       </View>
 
       <Animated.View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          paddingHorizontal: 10,
-          borderRadius: showMenu ? 15 : 0,
-          transform: [{translateX: offsetValue}],
-        }}>
+        style={[
+          styles.contentContainer,
+          {
+            borderRadius: showMenu ? 15 : 0,
+            transform: [{translateX: offsetValue}],
+          },
+        ]}>
         <Animated.View>
           <TouchableOpacity
             onPress={() => {
@@ -108,26 +96,10 @@ const DrawerContentScreen = ({navigation}) => {
             }}>
             <Image
               source={showMenu ? close : menu}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: 'black',
-                marginTop: 15,
-              }}></Image>
+              style={styles.burgerContainer}></Image>
           </TouchableOpacity>
 
-          <Text
-            style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              color: 'black',
-              paddingTop: 20,
-            }}>
-            {currentTab}
-          </Text>
-
-          {viewPage(showProfile)}
-
+          <View style={styles.componentContainer}>{viewPage(showProfile)}</View>
         </Animated.View>
       </Animated.View>
     </View>
@@ -141,6 +113,45 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
+  sidebarContainer: {
+    justifyContent: 'flex-start',
+    padding: 15,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginTop: 8,
+  },
+  profileName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    marginTop: 20,
+  },
+  buttonsContainer: {
+    flexGrow: 1,
+    marginTop: 50,
+  },
+  contentContainer: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 0,
+  },
+  burgerContainer: {
+    width: 20,
+    height: 20,
+    tintColor: 'black',
+    marginTop: 15,
+    marginHorizontal: 10,
+  },
+  componentContainer: {
+    justifyContent: 'flex-end'
+  }
 });
 
 export default DrawerContentScreen;

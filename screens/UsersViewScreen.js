@@ -25,6 +25,9 @@ const UsersViewScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    width: 400,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
