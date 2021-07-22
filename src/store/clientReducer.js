@@ -1,6 +1,6 @@
 
 const initialState = {
-    state: false
+    state: [false]
 };
 
 export const SET_USER = "SET_USER";

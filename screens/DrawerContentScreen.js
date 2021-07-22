@@ -85,6 +85,7 @@ const DrawerContentScreen = ({navigation}) => {
         ]}>
         <Animated.View>
           <TouchableOpacity
+          style={{width:30}}
             onPress={() => {
               Animated.timing(offsetValue, {
                 toValue: showMenu ? 0 : 230,

@@ -10,18 +10,19 @@ import {
 } from 'react-native';
 import {registerUser} from '../src/store/clientReducer';
 import {showMessage, hideMessage} from 'react-native-flash-message';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 const SignUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const state = useSelector(state => state.clientReducer.state[0]);
 
   const signUp = () => {
     dispatch(registerUser({email, password}));
-    useSelector(state => state.clientReducer.state)
+    state
       ? () => navigation.navigate('SignIn')
       : () => {
           showMessage({
@@ -59,7 +60,7 @@ const SignUpScreen = ({navigation}) => {
             onChange={text => setPassword(text)}></TextInput>
 
           <View style="styles.signupContainer">
-            <TouchableOpacity style={styles.signup} onPress={signUp()}>
+            <TouchableOpacity style={styles.signup} onPress={signUp}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>

@@ -8,8 +8,9 @@ import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UsersViewScreen = () => {
   const dispatch = useDispatch();
-  React.useEffect(() => dispatch(fetchUsers()), []);
+  React.useEffect(() => dispatch(fetchUsers({number: 1})), []);
   const usersCards = useSelector(state => state.usersReducer.users);
+  
 
   return (
     <View style={styles.container}>
@@ -26,6 +27,7 @@ const UsersViewScreen = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
+    paddingBottom: 70,
     paddingHorizontal: 10,
     width: 400,
     alignItems: 'flex-start',

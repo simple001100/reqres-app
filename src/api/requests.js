@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const fetchUsersFromApi = () => axios.get('https://reqres.in/api/users', {
+export const fetchUsersFromApi = (number) => axios.get('https://reqres.in/api/users', {
     params: {
-        page: 1,
+        page: number,
     }
 });
 
-export const registerUserApi = ({email, password}) => axios.post('https://reqres.in/api/register', {
-    email,
-    password
+export const registerUserApi = (data) => axios.post('https://reqres.in/api/register', {
+    email: data.email,
+    password: data.password
 });

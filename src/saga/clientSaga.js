@@ -5,9 +5,9 @@ import {setUser} from '../store/clientReducer';
 
 function* registerUserWorker(action) {
   const res = yield call(registerUserApi, action.payload);
-  yield put(setUser(true));
+  yield put(setUser(res.error));
 }
 
 export function* clientWatcher() {
-  yield takeEvery(REGISTER_USER, registerUserWorker);
+  yield take(REGISTER_USER, registerUserWorker);
 }
