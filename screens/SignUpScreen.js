@@ -14,22 +14,14 @@ import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 const SignUpScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const state = useSelector(state => state.clientReducer.state[0]);
+  const togle = () => useSelector(state => state.clientReducer.data[0].togleRegistration);
 
   const signUp = () => {
     dispatch(registerUser({email, password}));
-    state
-      ? () => navigation.navigate('SignIn')
-      : () => {
-          showMessage({
-            message: 'Simple message',
-            type: 'info',
-          });
-        };
   };
 
   return (
@@ -60,7 +52,7 @@ const SignUpScreen = ({navigation}) => {
             onChange={text => setPassword(text)}></TextInput>
 
           <View style="styles.signupContainer">
-            <TouchableOpacity style={styles.signup} onPress={signUp}>
+            <TouchableOpacity style={styles.signup} onPress={() => dispatch(registerUser({email, password}))}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>

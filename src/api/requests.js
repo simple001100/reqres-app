@@ -10,3 +10,9 @@ export const registerUserApi = (data) => axios.post('https://reqres.in/api/regis
     email: data.email,
     password: data.password
 });
+
+export const signinUserApi = (data) => axios.post('https://reqres.in/api/login', {
+    email: data.email,
+    password: data.password
+});
+
