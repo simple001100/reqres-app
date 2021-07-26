@@ -8,22 +8,11 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import { signinUser } from '../src/store/clientReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import {signinUser} from '../src/store/clientReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {useState} from 'react';
 
 const SignInScreen = ({navigation}) => {
-  const [email, setEmail] = useState('eve.holt@reqres.in');
-  const [password, setPassword] = useState('');
-
-  const dispatch = useDispatch();
-
-  React.useEffect(() => navigation.navigate('DrawerContent'), [useSelector(state => state.clientReducer.data[1].togleSignin)]);
-
-  const signIn = () => {
-    dispatch(signinUser({email, password}));
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -37,25 +26,19 @@ const SignInScreen = ({navigation}) => {
       <View style={styles.contentContainer}>
         <View>
           <Text style={styles.titles}>Login</Text>
-          <TextInput style={styles.loginInput} placeholder="Email" onChange={text => setEmail(text)} />
+          <TextInput style={styles.loginInput} placeholder="Email" />
 
           <Text style={styles.titles}>Password</Text>
-          <TextInput
-            style={styles.passInput}
-            placeholder="Password" onChange={text => setPassword(text)} />
+          <TextInput style={styles.passInput} placeholder="Password" />
 
           <View style="styles.signinContainer">
-            <TouchableOpacity
-              style={styles.signin}
-              onPress={}>
+            <TouchableOpacity style={styles.signin} onPress={() => navigation.navigate('DrawerContent')}>
               <Text style={styles.signinText}>Sign in</Text>
             </TouchableOpacity>
           </View>
 
           <View style="styles.signupContainer">
-            <TouchableOpacity
-              style={styles.signup}
-              onPress={signIn}>
+            <TouchableOpacity style={styles.signup}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>
