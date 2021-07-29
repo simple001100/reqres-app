@@ -1,19 +1,24 @@
-import {call, put, take, spawn} from '@redux-saga/core/effects';
-import {SET_TOGLE_REGISTRATION} from '../store/clientReducer';
+import {call, put, takeEvery, spawn} from '@redux-saga/core/effects';
 import {registerUserApi} from '../api/requests';
-import {setTogleRegistration, setTogleSignIn} from '../store/clientReducer';
+import {SIGNIN_USER} from '../store/clientReducer';
+import {setToken} from '../store/clientReducer';
+import {signinUserApi} from '../api/requests';
 
 function* registerUserWorker(action) {
   const res = yield call(registerUserApi, action.payload);
   yield put(setTogleRegistration(true));
 }
 
-function* signinUserWorker(action) {
-  const res = yield call(signinUserApi, action.payload);
-  yield put(setTogleSignIn(true));
+function* signinUserWorker({payload}) {
+  try {
+    const res = yield call(signinUserApi, payload);
+    const {data} = res;
+    yield put(setToken(data.token));
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function* clientWatcher() {
-  yield take(SET_TOGLE_SIGNIN, signinUserWorker);
-  yield take(SET_TOGLE_REGISTRATION, registerUserWorker);
+  yield takeEvery(SIGNIN_USER, signinUserWorker);
 }

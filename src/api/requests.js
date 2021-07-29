@@ -11,8 +11,8 @@ export const registerUserApi = (data) => axios.post('https://reqres.in/api/regis
     password: data.password
 });
 
-export const signinUserApi = (data) => axios.post('https://reqres.in/api/login', {
-    email: data.email,
-    password: data.password
+export const signinUserApi = ({login, password}) => axios.post('https://reqres.in/api/login', {
+    email: login,
+    password
 });
 

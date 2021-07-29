@@ -3,16 +3,59 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   StyleSheet,
-  TextInput,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import {signinUser} from '../src/store/clientReducer';
+import {useForm, Controller} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
-import {useState} from 'react';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import { useRef } from 'react';
+
+import {Input} from '../components/Input';
+import {Button} from '../components/Button';
+
+import {signinUser} from '../src/store/clientReducer';
+
+const schema = yup.object().shape({
+  login: yup.string().email('Invalid email').required('Email is required'),
+  password: yup
+    .string()
+    .min(4, 'Password must be between 4 and 8 characters')
+    .max(16, 'Password must be between 4 and 8 characters')
+    .required('Password is required'),
+});
 
 const SignInScreen = ({navigation}) => {
+  const sucses = useSelector(state => state.clientReducer.sucses);
+
+  React.useEffect(() => sucses ? console.log('true') : console.log('false'), [sucses]);
+
+  const dispatch = useDispatch();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      login: '',
+      password: '',
+    },
+  });
+
+  const onSubmitSignIn = data => {
+    dispatch(signinUser(data));
+
+    // reset();
+  };
+
+  const onSubmitSignUp = () => {};
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,25 +67,53 @@ const SignInScreen = ({navigation}) => {
         />
       </View>
       <View style={styles.contentContainer}>
-        <View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.titles}>Login</Text>
-          <TextInput style={styles.loginInput} placeholder="Email" />
+          <Text style={styles.error}>{errors.login?.message}</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: false,
+            }}
+            render={({field: {onChange, value}}) => (
+              <Input onChange={onChange} value={value} name="Email" />
+            )}
+            name="login"
+          />
 
           <Text style={styles.titles}>Password</Text>
-          <TextInput style={styles.passInput} placeholder="Password" />
+          
+          <Text style={styles.error}>{errors.password?.message}</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: false,
+            }}
+            render={({field: {onChange, value}}) => (
+              <Input onChange={onChange} value={value} name="Password" />
+            )}
+            name="password"
+          />
 
-          <View style="styles.signinContainer">
-            <TouchableOpacity style={styles.signin} onPress={() => navigation.navigate('DrawerContent')}>
-              <Text style={styles.signinText}>Sign in</Text>
-            </TouchableOpacity>
+          <View style="styles.buttonContainer">
+            <Button
+              name="Sign in"
+              action={handleSubmit(onSubmitSignIn)}
+              backgroundColor="#5359D1"
+              textColor="#FAFAFC"
+            />
           </View>
 
-          <View style="styles.signupContainer">
-            <TouchableOpacity style={styles.signup}>
-              <Text style={styles.signupText}>Sign up</Text>
-            </TouchableOpacity>
+          <View style="styles.buttonContainer">
+            <Button
+              name="Sign up"
+              action={handleSubmit(onSubmitSignUp)}
+              backgroundColor="#FAFAFC"
+              textColor="#5359D1"
+            />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </View>
   );
@@ -77,56 +148,12 @@ const styles = StyleSheet.create({
     color: '#5359D1',
     fontSize: 18,
   },
-  loginInput: {
-    height: 50,
-    borderRadius: 6,
-    marginBottom: 5,
-    fontSize: 18,
-    borderWidth: 0.8,
-    borderColor: '#5359D1',
-  },
-  passInput: {
-    borderWidth: 0.8,
-    borderColor: '#5359D1',
-    borderRadius: 6,
-    height: 50,
-    marginBottom: 10,
-    fontSize: 18,
-  },
-  signin: {
-    borderColor: '#5359D1',
-    backgroundColor: '#FAFAFC',
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
+  buttonContainer: {
     alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: '#5359D1',
-    marginBottom: 10,
   },
-  signinText: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#FAFAFC',
-  },
-  signup: {
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#5359D1',
-    backgroundColor: '#FAFAFC',
-    marginBottom: 10,
-  },
-  signupText: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#5359D1',
-  },
-  signinContainer: {
-    alignItems: 'center',
+  error: {
+    color: 'red',
+    fontSize: 12,
   },
 });
 

@@ -7,6 +7,7 @@ import {
   Animated,
   Image,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 
 import ProfileScreen from './ProfileScreen';
@@ -40,7 +41,7 @@ const DrawerContentScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.sidebarContainer}>
         <Image source={profile} style={styles.profileImage}></Image>
 
@@ -103,7 +104,7 @@ const DrawerContentScreen = ({navigation}) => {
           <View style={styles.componentContainer}>{viewPage(showProfile)}</View>
         </Animated.View>
       </Animated.View>
-    </View>
+    </SafeAreaView>
   );
 };
 
