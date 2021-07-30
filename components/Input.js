@@ -8,6 +8,7 @@ export const Input = props => {
       onChangeText={value => props.onChange(value)}
       value={props.value}
       placeholder={props.name}
+      secureTextEntry={props.secureEntry}
     />
   );
 };

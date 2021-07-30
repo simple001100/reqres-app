@@ -1,16 +1,17 @@
 import * as React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProfile } from '../src/store/profileReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfile} from '../src/store/profileReducer';
 
 const ProfileScreen = props => {
-  const dispatch = useDispatch();
-  React.useEffect(() => dispatch(getProfile(), []));
-  const personalData = useSelector(state => state.profileReducer.personalData);
-
   return (
     <View style={StyleSheet.container}>
-      <Image source={props.avatar} style={styles.avatar} />
+      <Image
+        source={{
+          uri: props.avatar,
+        }}
+        style={styles.avatar}
+      />
 
       <View style={styles.dataContainer}>
         <Text style={styles.contentName}>Personal data</Text>
@@ -18,15 +19,15 @@ const ProfileScreen = props => {
         <View style={styles.infoContainer}>
           <View style={styles.nameContainer}>
             <Text style={styles.info}>Name:</Text>
-            <Text style={styles.name}>{personalData.firstName}</Text>
+            <Text style={styles.name}>{props.firstName}</Text>
           </View>
 
           <View style={styles.nameContainer}>
             <Text style={styles.info}>Surname:</Text>
-            <Text style={styles.name}>{personalData.lastName}</Text>
+            <Text style={styles.name}>{props.lastName}</Text>
           </View>
 
-          <Text style={styles.email}>{personalData.email}</Text>
+          <Text style={styles.email}>{props.email}</Text>
         </View>
       </View>
     </View>

@@ -3,7 +3,6 @@ import {View, FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchUsers} from '../src/store/usersReducer';
 import UserCard from '../components/UserCard';
-import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UsersViewScreen = () => {
   const dispatch = useDispatch();

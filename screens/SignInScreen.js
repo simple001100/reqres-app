@@ -12,12 +12,11 @@ import {useForm, Controller} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import { useRef } from 'react';
 
 import {Input} from '../components/Input';
 import {Button} from '../components/Button';
 
-import {signinUser} from '../src/store/clientReducer';
+import {signinUser} from '../src/store/client/signinReducer';
 
 const schema = yup.object().shape({
   login: yup.string().email('Invalid email').required('Email is required'),
@@ -29,10 +28,6 @@ const schema = yup.object().shape({
 });
 
 const SignInScreen = ({navigation}) => {
-  const sucses = useSelector(state => state.clientReducer.sucses);
-
-  React.useEffect(() => sucses ? console.log('true') : console.log('false'), [sucses]);
-
   const dispatch = useDispatch();
 
   const {
@@ -50,11 +45,11 @@ const SignInScreen = ({navigation}) => {
 
   const onSubmitSignIn = data => {
     dispatch(signinUser(data));
-
-    // reset();
   };
 
-  const onSubmitSignUp = () => {};
+  const onSubmitSignUp = () => {
+    navigation.navigate('SignUp');
+  };
 
   return (
     <View style={styles.container}>
@@ -70,7 +65,7 @@ const SignInScreen = ({navigation}) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.titles}>Login</Text>
-          <Text style={styles.error}>{errors.login?.message}</Text>
+
           <Controller
             control={control}
             rules={{
@@ -81,20 +76,21 @@ const SignInScreen = ({navigation}) => {
             )}
             name="login"
           />
+          <Text style={styles.error}>{errors.login?.message}</Text>
 
           <Text style={styles.titles}>Password</Text>
-          
-          <Text style={styles.error}>{errors.password?.message}</Text>
+
           <Controller
             control={control}
             rules={{
               required: false,
             }}
             render={({field: {onChange, value}}) => (
-              <Input onChange={onChange} value={value} name="Password" />
+              <Input onChange={onChange} value={value} name="Password" secureEntry={true} />
             )}
             name="password"
           />
+          <Text style={styles.error}>{errors.password?.message}</Text>
 
           <View style="styles.buttonContainer">
             <Button
@@ -108,7 +104,7 @@ const SignInScreen = ({navigation}) => {
           <View style="styles.buttonContainer">
             <Button
               name="Sign up"
-              action={handleSubmit(onSubmitSignUp)}
+              action={onSubmitSignUp}
               backgroundColor="#FAFAFC"
               textColor="#5359D1"
             />

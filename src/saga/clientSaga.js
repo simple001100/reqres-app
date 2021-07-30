@@ -1,24 +1,36 @@
 import {call, put, takeEvery, spawn} from '@redux-saga/core/effects';
 import {registerUserApi} from '../api/requests';
-import {SIGNIN_USER} from '../store/clientReducer';
-import {setToken} from '../store/clientReducer';
 import {signinUserApi} from '../api/requests';
-
-function* registerUserWorker(action) {
-  const res = yield call(registerUserApi, action.payload);
-  yield put(setTogleRegistration(true));
-}
+import {SIGNIN_USER} from '../store/client/signinReducer';
+import {setToken} from '../store/client/signupReducer';
+import {SIGNUP_USER} from '../store/client/signupReducer';
+import {setTokenId} from '../store/client/signinReducer';
+import {getProfile} from '../store/profileReducer';
+import {signInError} from '../store/client/signinReducer';
+import { signUpError } from '../store/client/signupReducer';
 
 function* signinUserWorker({payload}) {
   try {
     const res = yield call(signinUserApi, payload);
     const {data} = res;
-    yield put(setToken(data.token));
+    yield put(setTokenId({token: data.token}));
+    yield put(getProfile({id: data.id}));
   } catch (e) {
-    console.log(e);
+    yield put(signInError({error: e}));
+  }
+}
+
+function* registerUserWorker({payload}) {
+  try {
+    const res = yield call(registerUserApi, payload);
+    const {data} = res;
+    yield put(setToken({token: data.token}));
+  } catch (e) {
+    yield put(signUpError({error: e}));
   }
 }
 
 export function* clientWatcher() {
   yield takeEvery(SIGNIN_USER, signinUserWorker);
+  yield takeEvery(SIGNUP_USER, registerUserWorker);
 }

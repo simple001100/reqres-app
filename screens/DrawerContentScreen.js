@@ -7,13 +7,13 @@ import {
   Animated,
   Image,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import ProfileScreen from './ProfileScreen';
 import UsersViewScreen from './UsersViewScreen';
 import {TabButtons} from '../components/TabButtons';
-import profile from '../assets/unknownUser.jpg';
 
 import home from '../assets/home.png';
 import search from '../assets/search.png';
@@ -23,6 +23,9 @@ import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 
 const DrawerContentScreen = ({navigation}) => {
+  
+  const {firstName, lastName, email, avatar} = useSelector(state => state.profileReducer);
+
   const [currentTab, setCurrentTab] = useState('Profile');
 
   const [showMenu, setShowMenu] = useState(false);
@@ -34,7 +37,7 @@ const DrawerContentScreen = ({navigation}) => {
   const viewPage = state => {
     switch (state) {
       case true:
-        return <ProfileScreen avatar={profile} />;
+        return <ProfileScreen firstName={firstName} lastName={lastName} emai={email} avatar={avatar} />;
       case false:
         return <UsersViewScreen />;
     }
@@ -43,7 +46,11 @@ const DrawerContentScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.sidebarContainer}>
-        <Image source={profile} style={styles.profileImage}></Image>
+        <Image
+          source={{
+            uri: avatar,
+          }}
+          style={styles.profileImage}></Image>
 
         <Text style={styles.profileName}>User</Text>
 
@@ -86,7 +93,7 @@ const DrawerContentScreen = ({navigation}) => {
         ]}>
         <Animated.View>
           <TouchableOpacity
-          style={{width:30}}
+            style={{width: 30}}
             onPress={() => {
               Animated.timing(offsetValue, {
                 toValue: showMenu ? 0 : 230,
@@ -152,8 +159,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   componentContainer: {
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 });
 
 export default DrawerContentScreen;
