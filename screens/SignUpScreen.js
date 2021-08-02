@@ -5,11 +5,13 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  KeyboardAvoidingView,
+  ScrollView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 
@@ -30,6 +32,8 @@ const schema = yup.object().shape({
 const SignUpScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
+  let error = useSelector(state => state.signupReducer.error);
+
   const {
     control,
     handleSubmit,
@@ -48,62 +52,69 @@ const SignUpScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
-        />
-      </View>
-      <View style={styles.contentContainer}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text style={styles.titles}>Login</Text>
-
-          <Controller
-            control={control}
-            rules={{
-              required: false,
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={{
+              uri: 'https://reactnative.dev/img/tiny_logo.png',
             }}
-            render={({field: {onChange, value}}) => (
-              <Input onChange={onChange} value={value} name="Email" />
-            )}
-            name="login"
           />
-          <Text style={styles.error}>{errors.login?.message}</Text>
+        </View>
+        <View style={styles.contentContainer}>
+          <ScrollView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Text style={styles.titles}>Login</Text>
 
-          <Text style={styles.titles}>Password</Text>
-
-          <Controller
-            control={control}
-            rules={{
-              required: false,
-            }}
-            render={({field: {onChange, value}}) => (
-              <Input
-                onChange={onChange}
-                value={value}
-                name="Password"
-                secureEntry={true}
-              />
-            )}
-            name="password"
-          />
-          <Text style={styles.error}>{errors.password?.message}</Text>
-
-          <View style="styles.buttonContainer">
-            <Button
-              name="Sign up"
-              action={handleSubmit(onSubmitSignUp)}
-              backgroundColor="#5359D1"
-              textColor="#FAFAFC"
+            <Controller
+              control={control}
+              rules={{
+                required: false,
+              }}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  onChange={onChange}
+                  value={value}
+                  name="Email"
+                  error={errors.login ? true : false}
+                />
+              )}
+              name="login"
             />
-          </View>
-        </KeyboardAvoidingView>
+            <Text style={styles.error}>{errors.login?.message || error}</Text>
+
+            <Text style={styles.titles}>Password</Text>
+
+            <Controller
+              control={control}
+              rules={{
+                required: false,
+              }}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  onChange={onChange}
+                  value={value}
+                  name="Password"
+                  secureEntry={true}
+                  error={errors.password ? true : false}
+                />
+              )}
+              name="password"
+            />
+            <Text style={styles.error}>{errors.password?.message}</Text>
+
+            <View style="styles.buttonContainer">
+              <Button
+                name="Sign up"
+                action={handleSubmit(onSubmitSignUp)}
+                backgroundColor="#5359D1"
+                textColor="#FAFAFC"
+              />
+            </View>
+          </ScrollView>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -120,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFC',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingTop: 40,
     paddingHorizontal: 30,
   },
   header: {
@@ -140,6 +151,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   error: {
+    marginBottom: 10,
     color: 'red',
     fontSize: 12,
   },

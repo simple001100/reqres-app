@@ -5,18 +5,22 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 
+import {showMessage} from 'react-native-flash-message';
+
 import {Input} from '../components/Input';
 import {Button} from '../components/Button';
 
 import {signinUser} from '../src/store/client/signinReducer';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const schema = yup.object().shape({
   login: yup.string().email('Invalid email').required('Email is required'),
@@ -29,6 +33,9 @@ const schema = yup.object().shape({
 
 const SignInScreen = ({navigation}) => {
   const dispatch = useDispatch();
+
+  let error = useSelector(state => state.signinReducer.error);
+  let isSignedUp = useSelector(state => state.signupReducer.signup);
 
   const {
     control,
@@ -48,70 +55,85 @@ const SignInScreen = ({navigation}) => {
   };
 
   const onSubmitSignUp = () => {
-    navigation.navigate('SignUp');
+    !isSignedUp
+      ? navigation.navigate('SignUp')
+      : showMessage({
+          message: 'You are already registered',
+          type: 'warning',
+        });
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
-        />
-      </View>
-      <View style={styles.contentContainer}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text style={styles.titles}>Login</Text>
-
-          <Controller
-            control={control}
-            rules={{
-              required: false,
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={{
+              uri: 'https://reactnative.dev/img/tiny_logo.png',
             }}
-            render={({field: {onChange, value}}) => (
-              <Input onChange={onChange} value={value} name="Email" />
-            )}
-            name="login"
           />
-          <Text style={styles.error}>{errors.login?.message}</Text>
+        </View>
+        <View style={styles.contentContainer}>
+          <ScrollView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Text style={styles.titles}>Login</Text>
 
-          <Text style={styles.titles}>Password</Text>
-
-          <Controller
-            control={control}
-            rules={{
-              required: false,
-            }}
-            render={({field: {onChange, value}}) => (
-              <Input onChange={onChange} value={value} name="Password" secureEntry={true} />
-            )}
-            name="password"
-          />
-          <Text style={styles.error}>{errors.password?.message}</Text>
-
-          <View style="styles.buttonContainer">
-            <Button
-              name="Sign in"
-              action={handleSubmit(onSubmitSignIn)}
-              backgroundColor="#5359D1"
-              textColor="#FAFAFC"
+            <Controller
+              control={control}
+              rules={{
+                required: false,
+              }}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  onChange={onChange}
+                  value={value}
+                  name="Email"
+                  error={errors.login || error ? true : false}
+                />
+              )}
+              name="login"
             />
-          </View>
+            <Text style={styles.error}>{errors.login?.message}</Text>
 
-          <View style="styles.buttonContainer">
-            <Button
-              name="Sign up"
-              action={onSubmitSignUp}
-              backgroundColor="#FAFAFC"
-              textColor="#5359D1"
+            <Text style={styles.titles}>Password</Text>
+
+            <Controller
+              control={control}
+              rules={{
+                required: false,
+              }}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  onChange={onChange}
+                  value={value}
+                  name="Password"
+                  secureEntry={true}
+                  error={errors.password || error ? true : false}
+                />
+              )}
+              name="password"
             />
-          </View>
-        </KeyboardAvoidingView>
+            <Text style={styles.error}>{errors.password?.message}</Text>
+
+            <View style="styles.buttonContainer">
+              <Button
+                name="Sign in"
+                action={handleSubmit(onSubmitSignIn)}
+                backgroundColor="#5359D1"
+                textColor="#FAFAFC"
+              />
+
+              <Button
+                name="Sign up"
+                action={onSubmitSignUp}
+                backgroundColor="#FAFAFC"
+                textColor="#5359D1"
+              />
+            </View>
+          </ScrollView>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -128,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFC',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingTop: 40,
     paddingHorizontal: 30,
   },
   header: {
@@ -144,10 +166,9 @@ const styles = StyleSheet.create({
     color: '#5359D1',
     fontSize: 18,
   },
-  buttonContainer: {
-    alignItems: 'center',
-  },
+  buttonContainer: {},
   error: {
+    marginBottom: 10,
     color: 'red',
     fontSize: 12,
   },

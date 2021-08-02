@@ -78,7 +78,6 @@ const DrawerContentScreen = ({navigation}) => {
             'LogOut',
             logout,
             setShowProfile,
-            navigation,
           )}
         </View>
       </View>

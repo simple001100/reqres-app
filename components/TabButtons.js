@@ -10,7 +10,6 @@ export const TabButtons = (
   title,
   image,
   setShowProfile,
-  navigation,
 ) => {
   const dispatch = useDispatch();
   return (

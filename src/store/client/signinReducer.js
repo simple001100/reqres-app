@@ -1,7 +1,7 @@
 const initialState = {
   signin: false,
   token: null,
-  error: null,
+  error: '',
 };
 
 export const SIGNIN_USER = 'SIGNIN_USER';
@@ -13,7 +13,7 @@ export default function signinReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TOKEN_ID:
       const {token, id} = action.payload;
-      return {...state, signin: true, id, token};
+      return {...state, signin: true, id, token, error: ''};
     case SIGN_OUT:
       return {...state, signin: false};
     case SIGNIN_ERROR:

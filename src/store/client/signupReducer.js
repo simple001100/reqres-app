@@ -1,7 +1,7 @@
 const initialState = {
-  signup: false,
+  signup: true,
   token: null,
-  error: null,
+  error: '',
 };
 
 export const SIGNUP_USER = 'SIGNUP_USER';
