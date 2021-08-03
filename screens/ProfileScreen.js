@@ -26,8 +26,10 @@ const ProfileScreen = props => {
             <Text style={styles.info}>Surname:</Text>
             <Text style={styles.name}>{props.lastName}</Text>
           </View>
-
-          <Text style={styles.email}>{props.email}</Text>
+          <View style={styles.nameContainer}>
+            <Text style={styles.info}>Surname:</Text>
+            <Text style={styles.name}>{props.email}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -35,30 +37,31 @@ const ProfileScreen = props => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    paddingHorizontal: 20
+  },
   avatar: {
-    alignItems: 'center',
-    width: 300,
-    height: 300,
+    marginLeft: 20,
+    width: 240,
+    height: 240,
+    borderRadius: 120,
   },
   dataContainer: {
     backgroundColor: '#B4CFEA',
     borderRadius: 30,
-    height: '60%',
-    paddingTop: 10,
+    marginTop: 10,
+    marginHorizontal: 10,
     paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   contentName: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#110C66',
-    marginTop: 20,
   },
-  infoContainer: {
-    paddingTop: 10,
-  },
+  infoContainer: {},
   nameContainer: {
-    paddingTop: 10,
     flexDirection: 'row',
   },
   name: {
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
     color: '#110C66',
     marginTop: 20,
   },
-  email: {},
 });
 
 export default ProfileScreen;

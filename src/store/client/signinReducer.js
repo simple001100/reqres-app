@@ -1,6 +1,7 @@
 const initialState = {
   signin: false,
   token: null,
+  id: null,
   error: '',
 };
 

@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {getProfile} from '../src/store/profileReducer';
 
 import ProfileScreen from './ProfileScreen';
 import UsersViewScreen from './UsersViewScreen';
@@ -18,13 +20,17 @@ import {TabButtons} from '../components/TabButtons';
 import home from '../assets/home.png';
 import search from '../assets/search.png';
 import logout from '../assets/logout.png';
-
 import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 
 const DrawerContentScreen = ({navigation}) => {
-  
-  const {firstName, lastName, email, avatar} = useSelector(state => state.profileReducer);
+  const dispatch = useDispatch();
+  let id = useSelector(state => state.signinReducer.id)
+  React.useEffect(() => dispatch(getProfile({number: id})), []);
+
+  let {firstName, lastName, email, avatar} = useSelector(
+    state => state.profileReducer,
+  );
 
   const [currentTab, setCurrentTab] = useState('Profile');
 
@@ -37,7 +43,14 @@ const DrawerContentScreen = ({navigation}) => {
   const viewPage = state => {
     switch (state) {
       case true:
-        return <ProfileScreen firstName={firstName} lastName={lastName} emai={email} avatar={avatar} />;
+        return (
+          <ProfileScreen
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+            avatar={avatar}
+          />
+        );
       case false:
         return <UsersViewScreen />;
     }
@@ -52,7 +65,7 @@ const DrawerContentScreen = ({navigation}) => {
           }}
           style={styles.profileImage}></Image>
 
-        <Text style={styles.profileName}>User</Text>
+        <Text style={styles.profileName}>{`${firstName} ${lastName}`}</Text>
 
         <View style={styles.buttonsContainer}>
           {TabButtons(
@@ -158,7 +171,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   componentContainer: {
-    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
 });
 

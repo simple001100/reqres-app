@@ -16,7 +16,7 @@ function* signinUserWorker({payload}) {
     yield put(setTokenId({token: data.token}));
     yield put(getProfile({id: data.id}));
   } catch (e) {
-    yield put(signInError({error: 'Please, check your password'}));
+    yield put(signInError({error: 'Please, check your email or password'}));
   }
 }
 

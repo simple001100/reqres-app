@@ -34,6 +34,10 @@ const SignUpScreen = ({navigation}) => {
 
   let error = useSelector(state => state.signupReducer.error);
 
+  const getError = React.useCallback(() => {
+    return error ? true : false;
+  }, [error]);
+
   const {
     control,
     handleSubmit,
@@ -76,7 +80,7 @@ const SignUpScreen = ({navigation}) => {
                   onChange={onChange}
                   value={value}
                   name="Email"
-                  error={errors.login ? true : false}
+                  error={errors.login || getError() ? true : false}
                 />
               )}
               name="login"
@@ -96,7 +100,7 @@ const SignUpScreen = ({navigation}) => {
                   value={value}
                   name="Password"
                   secureEntry={true}
-                  error={errors.password ? true : false}
+                  error={errors.password || getError() ? true : false}
                 />
               )}
               name="password"

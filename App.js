@@ -14,7 +14,6 @@ const App = () => {
 
   let isSignedIn = useSelector(state => state.signinReducer.signin);
   let isSignedUp = useSelector(state => state.signupReducer.signup);
-  
 
   return (
     <NavigationContainer>

@@ -1,5 +1,5 @@
 const initialState = {
-  signup: true,
+  signup: false,
   token: null,
   error: '',
 };

@@ -13,7 +13,6 @@ import {useForm, Controller} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-
 import {showMessage} from 'react-native-flash-message';
 
 import {Input} from '../components/Input';
@@ -36,6 +35,10 @@ const SignInScreen = ({navigation}) => {
 
   let error = useSelector(state => state.signinReducer.error);
   let isSignedUp = useSelector(state => state.signupReducer.signup);
+
+  const getError = React.useCallback(() => {
+    return error ? true : false;
+  }, [error]);
 
   const {
     control,
@@ -76,6 +79,7 @@ const SignInScreen = ({navigation}) => {
         </View>
         <View style={styles.contentContainer}>
           <ScrollView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Text style={styles.error}>{error}</Text>
             <Text style={styles.titles}>Login</Text>
 
             <Controller
@@ -88,7 +92,7 @@ const SignInScreen = ({navigation}) => {
                   onChange={onChange}
                   value={value}
                   name="Email"
-                  error={errors.login || error ? true : false}
+                  error={errors.login || getError() ? true : false}
                 />
               )}
               name="login"
@@ -108,7 +112,7 @@ const SignInScreen = ({navigation}) => {
                   value={value}
                   name="Password"
                   secureEntry={true}
-                  error={errors.password || error ? true : false}
+                  error={errors.password || getError() ? true : false}
                 />
               )}
               name="password"
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFC',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 30,
   },
   header: {
