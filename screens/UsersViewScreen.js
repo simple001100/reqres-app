@@ -12,20 +12,19 @@ import {fetchUsers} from '../src/store/usersReducer';
 
 import UserCard from '../components/UserCard';
 
-const UsersViewScreen = () => {
+const UsersViewScreen = props => {
   const dispatch = useDispatch();
-  React.useEffect(() => dispatch(fetchUsers({number: 1})), []);
 
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const currentPage = props.currentPage;
+  const setCurrentPage = props.setCurrentPage;
 
   const usersCards = useSelector(state => state.usersReducer.users);
   let loading = useSelector(state => state.usersReducer.loading);
   const totalPages = useSelector(state => state.usersReducer.totalPages);
 
-  const isLoading = () =>
-    React.useCallback(() => {
-      return loading ? true : false;
-    }, loading);
+  const isLoading = React.useCallback(() => {
+    return loading ? true : false;
+  }, [loading]);
 
   const getUsers = () => {
     dispatch(fetchUsers({number: currentPage}));
@@ -54,8 +53,9 @@ const UsersViewScreen = () => {
         renderItem={({item}) => <UserCard data={item} />}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        onEndReached={() => handleEnd}
+        onEndReached={loadMoreItem}
         onEndReachedThreshold={0}
+        ListFooterComponent={renderLoader}
       />
     </View>
   );

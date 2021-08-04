@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getProfile} from '../src/store/profileReducer';
 
 const ProfileScreen = props => {
   return (
@@ -27,7 +25,7 @@ const ProfileScreen = props => {
             <Text style={styles.name}>{props.lastName}</Text>
           </View>
           <View style={styles.nameContainer}>
-            <Text style={styles.info}>Surname:</Text>
+            <Text style={styles.info}>Email:</Text>
             <Text style={styles.name}>{props.email}</Text>
           </View>
         </View>
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   avatar: {
-    marginLeft: 20,
+    marginLeft: 30,
     width: 240,
     height: 240,
     borderRadius: 120,

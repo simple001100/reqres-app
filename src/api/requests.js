@@ -4,6 +4,7 @@ export const fetchUsersFromApi = number =>
   axios.get('https://reqres.in/api/users', {
     params: {
       page: number,
+      delay: 3
     },
   });
 

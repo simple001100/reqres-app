@@ -1,4 +1,5 @@
 const initialState = {
+  id: null,
   firstName: 'unknown',
   lastName: 'unknown',
   email: 'not found',
@@ -6,6 +7,7 @@ const initialState = {
 };
 
 export const GET_PROFILE = 'GET_PROFILE';
+export const GET_ID = 'GET_ID';
 export const SET_PROFILE_DATA = 'SET_PROFILE_DATA';
 
 export default function profileReducer(state = initialState, action) {
@@ -13,10 +15,14 @@ export default function profileReducer(state = initialState, action) {
     case SET_PROFILE_DATA:
       const {firstName, lastName, email, avatar} = action.payload;
       return {...state, firstName, lastName, email, avatar};
+    case GET_ID:
+      const {id} = action.payload;
+      return {...state, id};
     default:
       return state;
   }
 }
 
 export const getProfile = () => ({type: GET_PROFILE});
-export const setProfileData = (payload) => ({type: SET_PROFILE_DATA, payload})
+export const getId = (payload) => ({type: GET_ID, payload});
+export const setProfileData = payload => ({type: SET_PROFILE_DATA, payload});

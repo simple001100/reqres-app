@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { signOut } from '../src/store/client/signinReducer';
+import { deleteUsers } from '../src/store/usersReducer';
 
 export const TabButtons = (
   currentTab,
@@ -17,6 +18,7 @@ export const TabButtons = (
       onPress={() => {
         if (title === 'LogOut') {
           dispatch(signOut());
+          dispatch(deleteUsers());
         } else if (title === 'Users') {
           setCurrentTab(title);
           setShowProfile(false);

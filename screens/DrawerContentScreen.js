@@ -25,8 +25,8 @@ import close from '../assets/close.png';
 
 const DrawerContentScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  let id = useSelector(state => state.signinReducer.id)
-  React.useEffect(() => dispatch(getProfile({number: id})), []);
+
+  React.useEffect(() => dispatch(getProfile()), []);
 
   let {firstName, lastName, email, avatar} = useSelector(
     state => state.profileReducer,
@@ -40,6 +40,10 @@ const DrawerContentScreen = ({navigation}) => {
 
   const offsetValue = useRef(new Animated.Value(0)).current;
 
+  const first = 1;
+
+  const [currentPage, setCurrentPage] = React.useState(first);
+
   const viewPage = state => {
     switch (state) {
       case true:
@@ -52,7 +56,7 @@ const DrawerContentScreen = ({navigation}) => {
           />
         );
       case false:
-        return <UsersViewScreen />;
+        return <UsersViewScreen  currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
     }
   };
 
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   componentContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
 
