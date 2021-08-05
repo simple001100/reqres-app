@@ -12,6 +12,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getProfile} from '../src/store/profileReducer';
+import {deleteUsers} from '../src/store/usersReducer';
 
 import ProfileScreen from './ProfileScreen';
 import UsersViewScreen from './UsersViewScreen';
@@ -40,9 +41,7 @@ const DrawerContentScreen = ({navigation}) => {
 
   const offsetValue = useRef(new Animated.Value(0)).current;
 
-  const first = 1;
-
-  const [currentPage, setCurrentPage] = React.useState(first);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const viewPage = state => {
     switch (state) {
@@ -56,7 +55,12 @@ const DrawerContentScreen = ({navigation}) => {
           />
         );
       case false:
-        return <UsersViewScreen  currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+        return (
+          <UsersViewScreen
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        );
     }
   };
 

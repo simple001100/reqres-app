@@ -1,9 +1,36 @@
 import * as React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Modal} from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import {Button} from '../components/Button';
+import EditProfileModal from '../components/EditProfileModal';
+
+import { deleteUsers } from '../src/store/usersReducer';
 
 const ProfileScreen = props => {
+  const dispatch = useDispatch();
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => dispatch(deleteUsers()), []);
+
+  const actionButton = () => {
+    setVisible(true);
+  };
+
   return (
     <View style={StyleSheet.container}>
+      <Modal
+        animationType="slide"
+        visible={visible}
+        onRequestClose={() => setVisible(false)}>
+        <EditProfileModal
+          visible={visible}
+          setVisible={setVisible}
+          firstName={props.firstName}
+          lastName={props.lastName}
+          avatar={props.avatar}
+        />
+      </Modal>
       <Image
         source={{
           uri: props.avatar,
@@ -30,6 +57,14 @@ const ProfileScreen = props => {
           </View>
         </View>
       </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          name="Edit"
+          textColor="white"
+          backgroundColor="#5359D1"
+          action={actionButton}
+        />
+      </View>
     </View>
   );
 };
@@ -37,16 +72,17 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20
+    alignItems: 'center',
   },
   avatar: {
-    marginLeft: 30,
-    width: 240,
-    height: 240,
+    marginLeft: 70,
+    width: 200,
+    height: 200,
     borderRadius: 120,
   },
   dataContainer: {
     backgroundColor: '#B4CFEA',
+    width: 340,
     borderRadius: 30,
     marginTop: 10,
     marginHorizontal: 10,
@@ -73,6 +109,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#110C66',
     marginTop: 20,
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: 340,
+    marginHorizontal: 10,
   },
 });
 

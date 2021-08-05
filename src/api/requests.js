@@ -4,7 +4,6 @@ export const fetchUsersFromApi = number =>
   axios.get('https://reqres.in/api/users', {
     params: {
       page: number,
-      delay: 3
     },
   });
 
@@ -22,3 +21,6 @@ export const signinUserApi = ({login, password}) =>
 
 export const fetchUserDataApi = number =>
   axios.get(`https://reqres.in/api/users/${number}`);
+
+export const changehUserDataApi = (number,firstName, lastName) =>
+  axios.put(`https://reqres.in/api/users/${number}`, {first_name: firstName, last_name: lastName});

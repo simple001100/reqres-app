@@ -20,7 +20,6 @@ const UsersViewScreen = props => {
 
   const usersCards = useSelector(state => state.usersReducer.users);
   let loading = useSelector(state => state.usersReducer.loading);
-  const totalPages = useSelector(state => state.usersReducer.totalPages);
 
   const isLoading = React.useCallback(() => {
     return loading ? true : false;
@@ -33,7 +32,7 @@ const UsersViewScreen = props => {
   const renderLoader = () => {
     return isLoading ? (
       <View style={styles.loaderStyles}>
-        <ActivityIndicator size="large" color="#aaa" />
+        <ActivityIndicator size="large" color="#5359D1" />
       </View>
     ) : null;
   };
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     paddingHorizontal: 10,
     width: 400,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   footer: {

@@ -1,13 +1,16 @@
 import {call, put, takeEvery} from '@redux-saga/core/effects';
+
 import {registerUserApi} from '../api/requests';
 import {signinUserApi} from '../api/requests';
+
 import {SIGNIN_USER} from '../store/client/signinReducer';
-import {setToken} from '../store/client/signupReducer';
 import {SIGNUP_USER} from '../store/client/signupReducer';
+
+import {setToken} from '../store/client/signupReducer';
 import {setTokenId} from '../store/client/signinReducer';
 import {getId} from '../store/profileReducer';
 import {signInError} from '../store/client/signinReducer';
-import { signUpError } from '../store/client/signupReducer';
+import {signUpError} from '../store/client/signupReducer';
 
 function* signinUserWorker({payload}) {
   try {

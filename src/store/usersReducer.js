@@ -26,7 +26,7 @@ export default function usersReducer(state = initialState, action) {
       return {
         ...state,
         users: users.slice(users.length),
-        totalPages: 0,
+        totalPages: 1,
         loading: false,
       };
   }
