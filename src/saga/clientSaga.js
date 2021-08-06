@@ -18,6 +18,7 @@ function* signinUserWorker({payload}) {
     const {data} = res;
     yield put(setTokenId({token: data.token, id: data.id}));
     yield put(getId({id: data.id}));
+    yield put(setToken({token: null}));
   } catch (e) {
     yield put(signInError({error: 'Please, check your email or password'}));
   }

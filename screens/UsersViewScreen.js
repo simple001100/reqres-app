@@ -18,6 +18,9 @@ const UsersViewScreen = props => {
   const currentPage = props.currentPage;
   const setCurrentPage = props.setCurrentPage;
 
+  React.useEffect(() => setCurrentPage(1), []);
+  
+
   const usersCards = useSelector(state => state.usersReducer.users);
   let loading = useSelector(state => state.usersReducer.loading);
 

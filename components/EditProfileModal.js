@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  ScrollView
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import * as yup from 'yup';
@@ -67,7 +68,7 @@ const EditProfileModal = props => {
           style={styles.avatar}
         />
 
-        <View style={styles.inputsContainer}>
+        <ScrollView style={styles.inputsContainer}>
           <Text style={styles.titles}>First name</Text>
           <Controller
             control={control}
@@ -105,7 +106,7 @@ const EditProfileModal = props => {
             name="lastName"
           />
           <Text style={styles.error}>{errors.lastName?.message}</Text>
-        </View>
+        </ScrollView>
       </View>
     </TouchableWithoutFeedback>
   );

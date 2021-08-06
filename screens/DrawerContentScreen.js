@@ -25,6 +25,7 @@ import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 
 const DrawerContentScreen = ({navigation}) => {
+  
   const dispatch = useDispatch();
 
   React.useEffect(() => dispatch(getProfile()), []);

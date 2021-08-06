@@ -12,7 +12,7 @@ export default function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TOKEN:
       const {token} = action.payload;
-      return {...state, signup: true, token, error: ''};
+      return {...state, signup: !state.signup, token, error: ''};
     case SIGNUP_ERROR:
       const {error} = action.payload;
       return {...state, error};

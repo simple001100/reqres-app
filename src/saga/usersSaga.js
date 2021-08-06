@@ -21,6 +21,7 @@ function* fetchUsersWorker({payload}) {
       const res = yield call(fetchUsersFromApi, number);
       const {data} = res;
       yield put(setUsers({data: data.data, totalPages: data.total_pages}));
+      
     }
   } catch (e) {
     console.log(e);

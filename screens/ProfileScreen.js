@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {View, Text, Image, StyleSheet, Modal} from 'react-native';
-import { useDispatch } from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
 
 import {Button} from '../components/Button';
 import EditProfileModal from '../components/EditProfileModal';
 
-import { deleteUsers } from '../src/store/usersReducer';
+import {deleteUsers} from '../src/store/usersReducer';
 
 const ProfileScreen = props => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const ProfileScreen = props => {
           avatar={props.avatar}
         />
       </Modal>
+
       <Image
         source={{
           uri: props.avatar,
