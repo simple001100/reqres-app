@@ -18,7 +18,7 @@ function* signinUserWorker({payload}) {
     const {data} = res;
     yield put(setTokenId({token: data.token, id: data.id}));
     yield put(getId({id: data.id}));
-    yield put(setToken({token: null}));
+    yield put(setToken({signup: false, token: null}));
   } catch (e) {
     yield put(signInError({error: 'Please, check your email or password'}));
   }
@@ -28,7 +28,7 @@ function* registerUserWorker({payload}) {
   try {
     const res = yield call(registerUserApi, payload);
     const {data} = res;
-    yield put(setToken({token: data.token}));
+    yield put(setToken({signup: true, token: data.token}));
   } catch (e) {
     yield put(signUpError({error: 'Please, check your email'}));
   }
