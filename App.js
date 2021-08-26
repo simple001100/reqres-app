@@ -13,7 +13,6 @@ const App = () => {
   const Stack = createStackNavigator();
 
   let isSignedIn = useSelector(state => state.signinReducer.signin);
-  let isSignedUp = useSelector(state => state.signupReducer.signup);
 
   return (
     <NavigationContainer>
@@ -26,12 +25,6 @@ const App = () => {
               options={options}
             />
           </>
-        ) : isSignedUp ? (
-          <Stack.Screen
-            name="SignIn"
-            component={SignInScreen}
-            options={options}
-          />
         ) : (
           <>
             <Stack.Screen

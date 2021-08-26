@@ -11,6 +11,7 @@ import {setTokenId} from '../store/client/signinReducer';
 import {getId} from '../store/profileReducer';
 import {signInError} from '../store/client/signinReducer';
 import {signUpError} from '../store/client/signupReducer';
+import {setSignIn} from '../store/client/signinReducer';
 
 function* signinUserWorker({payload}) {
   try {
@@ -18,7 +19,8 @@ function* signinUserWorker({payload}) {
     const {data} = res;
     yield put(setTokenId({token: data.token, id: data.id}));
     yield put(getId({id: data.id}));
-    yield put(setToken({signup: false, token: null}));
+    yield put(setToken({token: null}));
+    yield put(setSignIn());
   } catch (e) {
     yield put(signInError({error: 'Please, check your email or password'}));
   }
@@ -28,7 +30,8 @@ function* registerUserWorker({payload}) {
   try {
     const res = yield call(registerUserApi, payload);
     const {data} = res;
-    yield put(setToken({signup: true, token: data.token}));
+    yield put(setToken({token: data.token}));
+    yield put(setSignIn());
   } catch (e) {
     yield put(signUpError({error: 'Please, check your email'}));
   }

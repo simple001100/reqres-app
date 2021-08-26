@@ -1,5 +1,4 @@
 const initialState = {
-  signup: false,
   token: null,
   error: '',
 };
@@ -11,8 +10,8 @@ export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 export default function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TOKEN:
-      const {token, signup} = action.payload;
-      return {...state, signup, token, error: ''};
+      const {token} = action.payload;
+      return {...state, token, error: ''};
     case SIGNUP_ERROR:
       const {error} = action.payload;
       return {...state, error};

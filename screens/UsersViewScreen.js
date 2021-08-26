@@ -3,7 +3,6 @@ import {
   View,
   FlatList,
   StyleSheet,
-  Text,
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,7 +19,6 @@ const UsersViewScreen = props => {
 
   React.useEffect(() => setCurrentPage(1), []);
   
-
   const usersCards = useSelector(state => state.usersReducer.users);
   let loading = useSelector(state => state.usersReducer.loading);
 
@@ -37,6 +35,7 @@ const UsersViewScreen = props => {
       <View style={styles.loaderStyles}>
         <ActivityIndicator size="large" color="#5359D1" />
       </View>
+      
     ) : null;
   };
 

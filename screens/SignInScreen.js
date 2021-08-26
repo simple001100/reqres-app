@@ -13,7 +13,6 @@ import {useForm, Controller} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {showMessage} from 'react-native-flash-message';
 
 import {Input} from '../components/Input';
 import {Button} from '../components/Button';
@@ -34,7 +33,6 @@ const SignInScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   let error = useSelector(state => state.signinReducer.error);
-  let isSignedUp = useSelector(state => state.signupReducer.signup);
 
   const getError = React.useCallback(() => {
     return error ? true : false;
@@ -58,12 +56,7 @@ const SignInScreen = ({navigation}) => {
   };
 
   const onSubmitSignUp = () => {
-    !isSignedUp
-      ? navigation.navigate('SignUp')
-      : showMessage({
-          message: 'You are already registered',
-          type: 'warning',
-        });
+    navigation.navigate('SignUp');
   };
 
   return (

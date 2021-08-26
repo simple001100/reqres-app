@@ -12,7 +12,6 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getProfile} from '../src/store/profileReducer';
-import {deleteUsers} from '../src/store/usersReducer';
 
 import ProfileScreen from './ProfileScreen';
 import UsersViewScreen from './UsersViewScreen';

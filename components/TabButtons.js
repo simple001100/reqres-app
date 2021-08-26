@@ -2,7 +2,8 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { signOut } from '../src/store/client/signinReducer';
+import { setSignIn } from '../src/store/client/signinReducer';
+import { removePersonalData } from '../src/store/profileReducer';
 import { deleteUsers } from '../src/store/usersReducer';
 
 export const TabButtons = (
@@ -17,7 +18,8 @@ export const TabButtons = (
     <TouchableOpacity
       onPress={() => {
         if (title === 'LogOut') {
-          dispatch(signOut());
+          dispatch(setSignIn());
+          dispatch(removePersonalData());
           dispatch(deleteUsers());
         } else if (title === 'Users') {
           setCurrentTab(title);

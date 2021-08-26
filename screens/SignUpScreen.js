@@ -29,7 +29,7 @@ const schema = yup.object().shape({
     .required('Password is required'),
 });
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = () => {
   const dispatch = useDispatch();
 
   let error = useSelector(state => state.signupReducer.error);
